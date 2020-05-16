@@ -20,12 +20,12 @@ node: 10.15.3
 ### node，cordova，ionic安装
 ### jdk安装(最好安装1.8的)
 ### sdk安装
-[官方地址](https://ionicframework.com/docs/installation/android)
+[下载地址](https://ionicframework.com/docs/installation/android)
 注意添加  ANDROID_HOME  ANDROID_SDK_ROOT 这两个环境变量（值就是sdk路径）
 然后在path里面添加 %ANDROID_HOME%\tools 和 %ANDROID_HOME%\platform-tools
 ### gradle全局安装
+[下载地址](https://gradle.org/releases)
 没有gradle直接打包会报错，所以先全局添加gradle
-[地址](https://gradle.org/releases)
 下载binary-only的类型，然后解压到任意文件夹，把该解压的文件的bin目录添加到环境变量中
 ### 创建项目
 ionic start myApp tabs
