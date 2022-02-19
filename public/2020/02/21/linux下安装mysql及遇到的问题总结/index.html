@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="我真的没想到安装myslq数据库会遇到这么多问题，浪费了很多时间，所以记录下来。 一，安装安装：yum -y install mysql mysql-server mysql-devel 可能会出现的问题：No package mysql-server available也就是说没安装上mysql-server解决办法：  rpm -ivh https:&#x2F;&#x2F;repo.mysql.com&#x2F;&#x2F;mysq">
+<meta name="keywords" content="个人博客,陈晓鹏,记录,seo,百度排名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux下安装mysql遇到的问题总结">
+<meta property="og:url" content="https:&#x2F;&#x2F;helloxiaopeng.com&#x2F;2020&#x2F;02&#x2F;21&#x2F;linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93&#x2F;index.html">
+<meta property="og:site_name" content="陈晓鹏的个人博客">
+<meta property="og:description" content="我真的没想到安装myslq数据库会遇到这么多问题，浪费了很多时间，所以记录下来。 一，安装安装：yum -y install mysql mysql-server mysql-devel 可能会出现的问题：No package mysql-server available也就是说没安装上mysql-server解决办法：  rpm -ivh https:&#x2F;&#x2F;repo.mysql.com&#x2F;&#x2F;mysq">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-21T15:02:19.252Z">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>linux下安装mysql遇到的问题总结</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<link rel="stylesheet" media="screen" href="/css/particles.css">
+
+<body class="max-width mx-auto px3 ltr">
+    <div id="particles-js"></div>
+
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/iamchenxiaopeng" target="_blank" rel="noopener">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/02/20/mybatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%BD%BF%E7%94%A8/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&text=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&is_video=false&description=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux下安装mysql遇到的问题总结&body=Check out this article: https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&name=linux下安装mysql遇到的问题总结&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&t=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一，安装"><span class="toc-number">1.</span> <span class="toc-text">一，安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二，安装完成后root密码是随机的"><span class="toc-number">2.</span> <span class="toc-text">二，安装完成后root密码是随机的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三，修改密码报错Your-password-does-not-satisfy-the-current-policy-requirements"><span class="toc-number">3.</span> <span class="toc-text">三，修改密码报错Your password does not satisfy the current policy requirements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四，默认root密码是不允许远程访问的"><span class="toc-number">4.</span> <span class="toc-text">四，默认root密码是不允许远程访问的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五，开放防火墙端口号"><span class="toc-number">5.</span> <span class="toc-text">五，开放防火墙端口号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六，如果以上操作还不行！！！"><span class="toc-number">6.</span> <span class="toc-text">六，如果以上操作还不行！！！</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        linux下安装mysql遇到的问题总结
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">陈晓鹏的个人博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-21T13:51:39.000Z" itemprop="datePublished">2020-02-21</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>我真的没想到安装myslq数据库会遇到这么多问题，浪费了很多时间，所以记录下来。</p>
+<h2 id="一，安装"><a href="#一，安装" class="headerlink" title="一，安装"></a>一，安装</h2><p>安装：yum -y install mysql mysql-server mysql-devel</p>
+<p>可能会出现的问题：No package mysql-server available<br>也就是说没安装上mysql-server<br>解决办法：  rpm -ivh <a href="https://repo.mysql.com//mysql57-community-release-el7-11.noarch.rpm" target="_blank" rel="noopener">https://repo.mysql.com//mysql57-community-release-el7-11.noarch.rpm</a><br>然后重新执行命令： yum -y install mysql-server</p>
+<h2 id="二，安装完成后root密码是随机的"><a href="#二，安装完成后root密码是随机的" class="headerlink" title="二，安装完成后root密码是随机的"></a>二，安装完成后root密码是随机的</h2><p>查看随机密码的方式：cat /var/log/mysqld.log | grep password</p>
+<p>有了这个密码就可以重新更改root密码了</p>
+<h2 id="三，修改密码报错Your-password-does-not-satisfy-the-current-policy-requirements"><a href="#三，修改密码报错Your-password-does-not-satisfy-the-current-policy-requirements" class="headerlink" title="三，修改密码报错Your password does not satisfy the current policy requirements"></a>三，修改密码报错Your password does not satisfy the current policy requirements</h2><p>这是因为你的密码太简单了，需要设置密码强度级别<br>登录mysql运行：set global validate_password_policy=LOW;<br>然后就可以改简单密码了</p>
+<h2 id="四，默认root密码是不允许远程访问的"><a href="#四，默认root密码是不允许远程访问的" class="headerlink" title="四，默认root密码是不允许远程访问的"></a>四，默认root密码是不允许远程访问的</h2><p>提示错误：2003 can’t connect to MySQL server on ip(10060)</p>
+<p>解决办法：登录mysql然后运行以下语句<br>1，use mysql;<br>2，UPDATE user SET <code>Host</code> = ‘%’ WHERE <code>User</code> = ‘root’ LIMIT 1;<br>3，flush privileges;</p>
+<p>注:查看允许访问的ip方式:SELECT User, Host FROM mysql.user;</p>
+<h2 id="五，开放防火墙端口号"><a href="#五，开放防火墙端口号" class="headerlink" title="五，开放防火墙端口号"></a>五，开放防火墙端口号</h2><p>centos 7使用firewall方式，这里记录的是centos 7，7以下用的是iptables，需要自行百度</p>
+<p>1，查看本机已经启用的监听端口:<br>ss -ant<br>2，firewall常用命令：<br>#centos7启动防火墙<br>systemctl start firewalld.service<br>#centos7停止防火墙/关闭防火墙<br>systemctl stop firewalld.service<br>#centos7重启防火墙<br>systemctl restart firewalld.service</p>
+<p>3，新增开放一个端口号<br>firewall-cmd –zone=public –add-port=80/tcp –permanent<br>4，重启防火墙：<br>systemctl restart firewalld.service</p>
+<h2 id="六，如果以上操作还不行！！！"><a href="#六，如果以上操作还不行！！！" class="headerlink" title="六，如果以上操作还不行！！！"></a>六，如果以上操作还不行！！！</h2><p>那么请你登录你的云服务器，找到  网络和安全组，<br>配置网络和安全组3306（mysql运行的端口）<br>终于，可以连接了！！！</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/iamchenxiaopeng" target="_blank" rel="noopener">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一，安装"><span class="toc-number">1.</span> <span class="toc-text">一，安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二，安装完成后root密码是随机的"><span class="toc-number">2.</span> <span class="toc-text">二，安装完成后root密码是随机的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三，修改密码报错Your-password-does-not-satisfy-the-current-policy-requirements"><span class="toc-number">3.</span> <span class="toc-text">三，修改密码报错Your password does not satisfy the current policy requirements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四，默认root密码是不允许远程访问的"><span class="toc-number">4.</span> <span class="toc-text">四，默认root密码是不允许远程访问的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五，开放防火墙端口号"><span class="toc-number">5.</span> <span class="toc-text">五，开放防火墙端口号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六，如果以上操作还不行！！！"><span class="toc-number">6.</span> <span class="toc-text">六，如果以上操作还不行！！！</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&text=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&is_video=false&description=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux下安装mysql遇到的问题总结&body=Check out this article: https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&title=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&name=linux下安装mysql遇到的问题总结&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://helloxiaopeng.com/2020/02/21/linux%E4%B8%8B%E5%AE%89%E8%A3%85mysql%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/&t=linux下安装mysql遇到的问题总结" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 hugh.chen
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/iamchenxiaopeng" target="_blank" rel="noopener">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <script src="/lib/my/particles.min.js"></script>
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?2e6da3c375c8a87f5b664cea6d4cb29c";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
